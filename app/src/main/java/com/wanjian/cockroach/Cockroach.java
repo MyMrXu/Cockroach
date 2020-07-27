@@ -14,6 +14,8 @@ import com.wanjian.cockroach.compat.ActivityKillerV28;
 import com.wanjian.cockroach.compat.IActivityKiller;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.weishu.reflection.Reflection;
 
@@ -27,6 +29,17 @@ public final class Cockroach {
     private static ExceptionHandler sExceptionHandler;
     private static boolean sInstalled = false;//标记位，避免重复安装卸载
     private static boolean sIsSafeMode;
+
+    public static List<UnableHandleError> unableHandleError = new ArrayList<>();
+
+    static {
+        unableHandleError.add(new UnableHandleError("android\\.view\\.Choreographer",
+                "Choreographer\\.java",
+                "doFrame"));
+        unableHandleError.add(new UnableHandleError("android\\.view\\.inputmethod\\.InputMethodManager",
+                "InputMethodManager\\.java",
+                null));
+    }
 
     private Cockroach() {
     }
@@ -231,13 +244,16 @@ public final class Cockroach {
                 return;
             }
             StackTraceElement element = elements[i];
-            if ("android.view.Choreographer".equals(element.getClassName())
-                    && "Choreographer.java".equals(element.getFileName())
-                    && "doFrame".equals(element.getMethodName())) {
-                sExceptionHandler.mayBeBlackScreen(e);
-                return;
+            for (UnableHandleError unableHandleError : unableHandleError) {
+                if (unableHandleError.className == null || unableHandleError.className.matcher(element.getClassName()).matches()) {
+                    if (unableHandleError.fileName == null || unableHandleError.fileName.matcher(element.getFileName()).matches()) {
+                        if (unableHandleError.methodName == null || unableHandleError.methodName.matcher(element.getMethodName()).matches()) {
+                            sExceptionHandler.mayBeBlackScreen(e);
+                            return;
+                        }
+                    }
+                }
             }
-
         }
     }
 

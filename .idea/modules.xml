@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cockroach.iml" filepath="$PROJECT_DIR$/Cockroach.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Cockroach-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Cockroach-app.iml" group="Cockroach/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demo/Cockroach-demo.iml" filepath="$PROJECT_DIR$/.idea/modules/demo/Cockroach-demo.iml" group="Cockroach/demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WorkFolder-Cockroach.iml" filepath="$PROJECT_DIR$/.idea/modules/WorkFolder-Cockroach.iml" group="Cockroach" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
     </modules>
